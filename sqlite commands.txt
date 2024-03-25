@@ -1,0 +1,59 @@
+CREATE TABLE Tracks (title TEXT, plays INTEGER)
+
+
+INSERT INTO Tracks (title, plays) VALUES ('My Way', 15)
+
+
+SELECT * FROM Tracks WHERE title = 'My Way'
+# * indicates that you want the database to return all of the columns for each row 
+# logical operations allowed in a WHERE clause include <, >, <=, >=, !=, as well as AND and OR and parentheses to build logical expressions.
+
+
+SELECT title,plays FROM Tracks ORDER BY title
+
+
+DELETE FROM Tracks WHERE title = 'My Way'
+
+
+UPDATE Tracks SET plays = 16 WHERE title = 'My Way'
+
+
+
+
+CREATE TABLE Pals (from_friend TEXT, to_friend TEXT)
+
+
+INSERT INTO Pals (from_friend,to_friend) VALUES ('drchuck', 'lhawthorn')
+
+
+CREATE TABLE People
+(id INTEGER PRIMARY KEY, name TEXT UNIQUE, retrieved INTEGER)
+
+
+CREATE TABLE Follows
+(from_id INTEGER, to_id INTEGER, UNIQUE(from_id, to_id) )
+
+
+cur.execute('''CREATE TABLE IF NOT EXISTS People
+(id INTEGER PRIMARY KEY, name TEXT UNIQUE, retrieved INTEGER)''')
+cur.execute('''CREATE TABLE IF NOT EXISTS Follows
+(from_id INTEGER, to_id INTEGER, UNIQUE(from_id, to_id))''')
+
+
+cur.execute('''INSERT OR IGNORE INTO People (name, retrieved)
+VALUES ( ?, 0)''', ( friend, ) )
+
+
+cur.execute('''INSERT OR IGNORE INTO Follows
+(from_id, to_id) VALUES (?, ?)''', (id, friend_id) )
+
+
+cur.execute(
+'INSERT OR IGNORE INTO Follows (from_id, to_id) VALUES (?, ?)',
+(id, friend_id)
+)
+
+
+SELECT * FROM Follows JOIN People
+ON Follows.from_id = People.id WHERE People.id = 1
+# SQL uses the JOIN clause to reconnect these tables.
